@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Snowman {
+public class GuessWord {
     public static void main(String[] args) {
         // purpose of program to let the user guess letters to a secret word, one a time
         // Users will have a limited number of guesses, program will keep track of letters that are wrong
@@ -13,8 +13,8 @@ public class Snowman {
 
 
 
-        String[] wordList = new String[] {"hello", "goodbye", "third", "yellow", "football", "proxy", "process", "penalties", "conversion"};
-
+        //String[] wordList = new String[] {"hello", "goodbye", "third", "yellow", "football", "proxy", "process", "penalties", "conversion"};
+        String[] wordList = new String[] {"goodbye", "hello"};
         // create random index from the word List array
         int randomIndex = rand.nextInt(wordList.length);
 
@@ -43,9 +43,12 @@ public class Snowman {
         // keep prompting user for a letter as long as they still have one of their 9 guesses left OR word is not finished
         //todo check for multiples of letters appearing inside the word
 
+        //todo need to debug the part about multiple letters
+
+        //todo refactor to make it so it goes through each index of the string and just looks at each letter
 
         while(numberOfGuessesLeft < 9 || remainingLetters > 0){
-            System.out.println("********* Number of Guesses left: " + numberOfGuessesLeft + "  *********");
+            System.out.println("********* Number of Wrong Guesses left: " + numberOfGuessesLeft + "  *********");
             System.out.println();
             System.out.println("********* Letters Guessed *********");
             System.out.println(lettersGuessed);
@@ -68,8 +71,24 @@ public class Snowman {
                 numberOfGuessesLeft --;
             } else { // then if guessed letter is found, add that letter(s) to the array of secretWordDisplay (could be more than once)
                 secretWordDisplay[indexOfGuess] = charGuessedLetter;
-            }
+                // then search the remaining substring from there until end of the string
 
+                String restOfString = secretWord.substring(indexOfGuess+1); // put the remaining substring in this string
+                for(int i = 0; i < restOfString.length(); i++) {
+                    int indexOfGuessRestOfString = restOfString.indexOf(strGuessedLetter);
+                    if (indexOfGuessRestOfString >= 0) {
+                        // determine the index of the original secret word
+                        secretWordDisplay[indexOfGuess+indexOfGuessRestOfString] = charGuessedLetter;
+                    } else {
+                        break;
+                    }
+                }
+
+            }
+            if (numberOfGuessesLeft == 0) {
+                System.out.println("***   SORRY YOU LOSE!!   ****");
+                break;
+            }
             //
         }
 

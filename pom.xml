@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>snowman-word-game</artifactId>
+    <artifactId>guess-the-word-game</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
