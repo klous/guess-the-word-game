@@ -83,7 +83,6 @@ public class GuessWord {
                         break;
                     }
                 }
-
             }
             if (numberOfGuessesLeft == 0) {
                 System.out.println("***   SORRY YOU LOSE!!   ****");
@@ -109,4 +108,18 @@ public class GuessWord {
         return returnString;
     }
 
+    // this method is set up to find all the matching letters, knowing there is already at least one
+    // pass in the letter guessed as string, a char[] array of the display letters and unknown letters, the secret word
+    // return an array of updated displayChars
+    // call this method
+    // look at each index value until end of word for the letter and update the display
+    // this method is only called if there IS a match
+    public static char[] updateWordDisplayGuess(String strLetterGuessed, String secretWord, char[] currentWordDisplay) {
+        char charLetter = strLetterGuessed.charAt(0);
+        int indexOfGuess = secretWord.indexOf(strLetterGuessed);
+        for (int i=0; i<secretWord.length(); i++) {
+            // check each letter
+        }
+
+    }
 }
