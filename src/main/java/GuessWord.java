@@ -11,8 +11,6 @@ public class GuessWord {
         // initially use an array to store the words, separated by comma. like: word,another,third
         //todo: store the secret word list in a text file or CSV and read that file
 
-
-
         //String[] wordList = new String[] {"hello", "goodbye", "third", "yellow", "football", "proxy", "process", "penalties", "conversion"};
         String[] wordList = new String[] {"goodbye", "hello"};
         // create random index from the word List array
@@ -32,20 +30,18 @@ public class GuessWord {
         // print out the spaces for the letters
 
         // build an array of the characters to display on the screen
+
+        // this creates the initial display of letters in a char array
         char[] secretWordDisplay = new char[totalLetters];
         for (int i = 0 ; i <secretWord.length();i++) {
             secretWordDisplay[i] = '_';
             }
 
-
+        //todo check if a single letter was already guessed. and ideally, as error correction if that letter is part of alphabet.
+        final char[] LETTERS_IN_ALPHABET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
         String lettersGuessed = " ";
         // keep prompting user for a letter as long as they still have one of their 9 guesses left OR word is not finished
-        //todo check for multiples of letters appearing inside the word
-
-        //todo need to debug the part about multiple letters
-
-        //todo refactor to make it so it goes through each index of the string and just looks at each letter
 
         while(numberOfGuessesLeft < 9 || remainingLetters > 0){
             System.out.println("********* Number of Wrong Guesses left: " + numberOfGuessesLeft + "  *********");
@@ -54,36 +50,35 @@ public class GuessWord {
             System.out.println(lettersGuessed);
             System.out.println();
             // show the display of unknown letters and known letters
+            // char[] myDisplay = new [secretWord.length()];
             String myDisplay = returnWordDisplay(secretWordDisplay);
+
+            // Show current display / status in game
+            //format it so it looks better, more readable
+
+
             System.out.println(myDisplay);
 
             System.out.println("What letter do you guess?");
             String strGuessedLetter = scanner.nextLine();
 
-            // get the first character in the string and put it in the char variable type
-            char charGuessedLetter = strGuessedLetter.charAt(0);
-            // check to see if the guessed letter is in the word at all, using indexOf
+
+            // call this method to create a char array of the letters of the secret word
+            char[] lettersInCharArray = buildCharArrayOfWord(secretWord);
+
+
+            // need to check if letter in there at all, so use indexOf
             int indexOfGuess = secretWord.indexOf(strGuessedLetter);
-            // if NOT found, add letter to the display of letters guessed
+            // if NOT found, add letter to the display of letters guessed and reduce the number of guesses left by 1
             if (indexOfGuess < 0){
                 lettersGuessed += strGuessedLetter;
                 lettersGuessed += " ";
                 numberOfGuessesLeft --;
-            } else { // then if guessed letter is found, add that letter(s) to the array of secretWordDisplay (could be more than once)
-                secretWordDisplay[indexOfGuess] = charGuessedLetter;
-                // then search the remaining substring from there until end of the string
+            } else { // letter is found somewhere, call this method to find all the instances of it
+                secretWordDisplay = updateWordDisplayGuess(strGuessedLetter, secretWord, secretWordDisplay);
 
-                String restOfString = secretWord.substring(indexOfGuess+1); // put the remaining substring in this string
-                for(int i = 0; i < restOfString.length(); i++) {
-                    int indexOfGuessRestOfString = restOfString.indexOf(strGuessedLetter);
-                    if (indexOfGuessRestOfString >= 0) {
-                        // determine the index of the original secret word
-                        secretWordDisplay[indexOfGuess+indexOfGuessRestOfString] = charGuessedLetter;
-                    } else {
-                        break;
-                    }
-                }
             }
+
             if (numberOfGuessesLeft == 0) {
                 System.out.println("***   SORRY YOU LOSE!!   ****");
                 break;
@@ -91,35 +86,53 @@ public class GuessWord {
             //
         }
 
-
     }
-    // display the letters guessed in a format, putting a space between each
-    public static String returnWordDisplay(char[] charArray) {
+    // build an array of the letters of the secret word
+    public static char[] buildCharArrayOfWord(String secretWord) {
+        // create array length of the word
+        char arrayCharSpaces[] = new char[secretWord.length()];
+        for(int i = 0 ; i< secretWord.length();i++) {
+            String s = secretWord.substring(i, i+1);
+            //get the letter at index 0 and put in char value
+            arrayCharSpaces[i] = s.charAt(0);
+        }
+
+        return arrayCharSpaces;
+    }
+
+
+   //  display the letters guessed in a format, putting a space between each (making it look nicer)
+    public static String returnWordDisplay(char[] displayArray) {
         String returnString = "";
-        for (int i = 0 ;i <charArray.length;i++) {
-            String letter = String.valueOf(charArray[i]);
+        for (int i = 0 ;i <displayArray.length;i++) {
+            String letter = Character.toString(displayArray[i]);
             returnString += letter;
             // System.out.print(secretWordDisplay[i]);
-            if (i != charArray.length - 1) { // if index is NOT at the last spot, print out a space
+            if (i != displayArray.length - 1) { // if index is NOT at the last spot, add a space to the string being built
                 returnString +=" ";
                 // System.out.print(" ");
             }
         }
         return returnString;
     }
-
-    // this method is set up to find all the matching letters, knowing there is already at least one
-    // pass in the letter guessed as string, a char[] array of the display letters and unknown letters, the secret word
-    // return an array of updated displayChars
-    // call this method
-    // look at each index value until end of word for the letter and update the display
-    // this method is only called if there IS a match
+// pass in letter guessed, the secret word, and the current game board and it will find all the matches
     public static char[] updateWordDisplayGuess(String strLetterGuessed, String secretWord, char[] currentWordDisplay) {
-        char charLetter = strLetterGuessed.charAt(0);
-        int indexOfGuess = secretWord.indexOf(strLetterGuessed);
-        for (int i=0; i<secretWord.length(); i++) {
-            // check each letter
+        // create new String array to hold the blanks and successful guesses of the word
+        char[] outputTrackingGameBoard = new char[secretWord.length()];
+        // iterate through the passed in array and add it to the output Array (basically make a copy of the contents)
+        for (int i =0;i< currentWordDisplay.length; i++) {
+            outputTrackingGameBoard[i] = currentWordDisplay[i];
         }
-
+        // I think this loop would be better just checking each string...for .equals
+        for (int i=0; i< outputTrackingGameBoard.length; i++) {
+            // check each letter, get the slice using substring of each letter
+            String substringSliceLetter = secretWord.substring(i, i+1);
+            // if letter matches the string the for loop is looking at that index
+            if(substringSliceLetter.equalsIgnoreCase(strLetterGuessed)) {
+                outputTrackingGameBoard[i] = strLetterGuessed.charAt(0);
+            }
+        }
+        return outputTrackingGameBoard;
     }
+
 }
