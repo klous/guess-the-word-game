@@ -11,8 +11,8 @@ public class GuessWord {
         // initially use an array to store the words, separated by comma. like: word,another,third
         //todo: store the secret word list in a text file or CSV and read that file
 
-        //String[] wordList = new String[] {"hello", "goodbye", "third", "yellow", "football", "proxy", "process", "penalties", "conversion"};
-        String[] wordList = new String[] {"goodbye", "hello"};
+        String[] wordList = new String[] {"fresh", "couch", "third", "yellow", "football", "proxy", "process", "penalties", "conversion"};
+        //String[] wordList = new String[] {"goodbye", "hello"};
         // create random index from the word List array
         int randomIndex = rand.nextInt(wordList.length);
 
@@ -20,12 +20,12 @@ public class GuessWord {
         String secretWord = wordList[randomIndex];
 
 
-        int numberOfGuessesLeft = 5;
+        int numberOfGuessesLeft = 7;
         int totalLetters = secretWord.length();
         int numberOfRemainingLetters = secretWord.length();
 
         // for testing, print the secret word
-        System.out.println("Hint, for testing - the word is: '" + secretWord +"'");
+        //System.out.println("Hint, for testing - the word is: '" + secretWord +"'");
 
         // print out the spaces for the letters
 
@@ -38,6 +38,9 @@ public class GuessWord {
             }
 
         //todo check if a single letter was already guessed. and ideally, as error correction if that letter is part of alphabet.
+        //todo and if a single letter is input
+
+        //todo would be nice, if you know the word you can guess it
         final char[] LETTERS_IN_ALPHABET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
         String lettersGuessed = " ";
@@ -59,10 +62,8 @@ public class GuessWord {
             System.out.println("What letter do you guess?");
             String strGuessedLetter = scanner.nextLine();
 
-
             // call this method to create a char array of the letters of the secret word
            // char[] lettersInCharArray = buildCharArrayOfWord(secretWord);
-
 
             // need to check if letter in there at all, so use indexOf
             int indexOfGuess = secretWord.indexOf(strGuessedLetter);
@@ -87,6 +88,8 @@ public class GuessWord {
             System.out.println("**********************************");
             System.out.println("*****   SORRY, YOU LOSE!!   ******");
             System.out.println("**********************************");
+            System.out.println();
+            System.out.println("The word was: " + secretWord);
 
         }
 
