@@ -20,9 +20,9 @@ public class GuessWord {
         String secretWord = wordList[randomIndex];
 
 
-        int numberOfGuessesLeft = 9;
+        int numberOfGuessesLeft = 5;
         int totalLetters = secretWord.length();
-        int remainingLetters = secretWord.length();
+        int numberOfRemainingLetters = secretWord.length();
 
         // for testing, print the secret word
         System.out.println("Hint, for testing - the word is: '" + secretWord +"'");
@@ -41,22 +41,19 @@ public class GuessWord {
         final char[] LETTERS_IN_ALPHABET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
         String lettersGuessed = " ";
-        // keep prompting user for a letter as long as they still have one of their 9 guesses left OR word is not finished
+        // keep prompting user for a letter as long as they still have one of their 9 guesses left and there are remaining letters to guess
 
-        while(numberOfGuessesLeft < 9 || remainingLetters > 0){
+        while(numberOfGuessesLeft > 0 && numberOfRemainingLetters > 0){
             System.out.println("********* Number of Wrong Guesses left: " + numberOfGuessesLeft + "  *********");
             System.out.println();
             System.out.println("********* Letters Guessed *********");
             System.out.println(lettersGuessed);
             System.out.println();
             // show the display of unknown letters and known letters
-            // char[] myDisplay = new [secretWord.length()];
             String myDisplay = returnWordDisplay(secretWordDisplay);
 
             // Show current display / status in game
             //format it so it looks better, more readable
-
-
             System.out.println(myDisplay);
 
             System.out.println("What letter do you guess?");
@@ -64,7 +61,7 @@ public class GuessWord {
 
 
             // call this method to create a char array of the letters of the secret word
-            char[] lettersInCharArray = buildCharArrayOfWord(secretWord);
+           // char[] lettersInCharArray = buildCharArrayOfWord(secretWord);
 
 
             // need to check if letter in there at all, so use indexOf
@@ -78,12 +75,19 @@ public class GuessWord {
                 secretWordDisplay = updateWordDisplayGuess(strGuessedLetter, secretWord, secretWordDisplay);
 
             }
-
-            if (numberOfGuessesLeft == 0) {
-                System.out.println("***   SORRY YOU LOSE!!   ****");
-                break;
-            }
+            numberOfRemainingLetters = checkNumberOfRemainingLetters(secretWordDisplay);
             //
+        }
+        // while game loop ended
+        if (numberOfRemainingLetters == 0) {
+            System.out.println("**********************************");
+            System.out.println("*****   CONGRATS, YOU WON!   *****");
+            System.out.println("**********************************");
+        } else if(numberOfGuessesLeft == 0) {
+            System.out.println("**********************************");
+            System.out.println("*****   SORRY, YOU LOSE!!   ******");
+            System.out.println("**********************************");
+
         }
 
     }
@@ -133,6 +137,18 @@ public class GuessWord {
             }
         }
         return outputTrackingGameBoard;
+    }
+
+    public static int checkNumberOfRemainingLetters (char[] currentWordDisplay) {
+        int numberOfLettersRemaining = 0;
+        for(int i = 0; i< currentWordDisplay.length; i++){
+            String s = String.valueOf(currentWordDisplay[i]);
+            // if a an underscore is found, representing a not found letter, add to numberOfLettersRemainingCounter
+            if (s.equals("_")) {
+                numberOfLettersRemaining ++;
+            }
+        }
+        return numberOfLettersRemaining;
     }
 
 }
