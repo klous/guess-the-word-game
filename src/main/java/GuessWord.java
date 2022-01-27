@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -6,6 +7,15 @@ public class GuessWord {
         // purpose of program to let the user guess letters to a secret word, one a time
         // Users will have a limited number of guesses, program will keep track of letters that are wrong
 
+        System.out.println("Welcome to the word guessing game! You'll guess one letter at a time.");
+        boolean playGame = true;
+        while(playGame) {
+            playGame = runGame();
+        }
+
+    }
+
+    private static boolean runGame() {
         Random rand = new Random(); // create instance of the Random Class called rand
         Scanner scanner = new Scanner(System.in);
         // initially use an array to store the words, separated by comma. like: word,another,third
@@ -25,7 +35,7 @@ public class GuessWord {
         int numberOfRemainingLetters = secretWord.length();
 
         // for testing, print the secret word
-        //System.out.println("Hint, for testing - the word is: '" + secretWord +"'");
+        System.out.println("Hint, for testing - the word is: '" + secretWord +"'");
 
         // print out the spaces for the letters
 
@@ -36,7 +46,6 @@ public class GuessWord {
         for (int i = 0 ; i <secretWord.length();i++) {
             secretWordDisplay[i] = '_';
             }
-
         //todo check if a single letter was already guessed. and ideally, as error correction if that letter is part of alphabet.
         //todo and if a single letter is input
 
@@ -81,6 +90,9 @@ public class GuessWord {
         }
         // while game loop ended
         if (numberOfRemainingLetters == 0) {
+            String finalDisplay = returnWordDisplay(secretWordDisplay);
+            System.out.println();
+            System.out.println(finalDisplay);
             System.out.println("**********************************");
             System.out.println("*****   CONGRATS, YOU WON!   *****");
             System.out.println("**********************************");
@@ -92,8 +104,16 @@ public class GuessWord {
             System.out.println("The word was: " + secretWord);
 
         }
-
+        System.out.println("Would you like to play again?");
+        System.out.println("(y)es or (n)o");
+        String inputPlayAgain = scanner.nextLine();
+        boolean playAgain = false;
+        if (inputPlayAgain.toLowerCase().equals("y")){
+            playAgain = true;
+        }
+        return playAgain;
     }
+
     // build an array of the letters of the secret word
     public static char[] buildCharArrayOfWord(String secretWord) {
         // create array length of the word
