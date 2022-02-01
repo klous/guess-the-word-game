@@ -7,11 +7,13 @@ public class GuessWord {
         // purpose of program to let the user guess letters to a secret word, one a time
         // Users will have a limited number of guesses, program will keep track of letters that are wrong
 
-        System.out.println("Welcome to the word guessing game! You'll guess one letter at a time.");
-        boolean playGame = true;
-        while(playGame) {
-            playGame = runGame();
-        }
+        SecretWord theWord = new SecretWord("Constellation");
+        System.out.println("This is the word above ^");
+//        System.out.println("Welcome to the word guessing game! You'll guess one letter at a time.");
+//        boolean playGame = true;
+//        while(playGame) {
+//            playGame = runGame();
+//        }
 
     }
 
