@@ -29,6 +29,15 @@ public class SecretWord {
 
     private List<Character> secretCharTracker = new ArrayList<>();
 
+    //todo implement this method that checks if letter guessed is in the alphabet
+    private Boolean isLetter(String letterGuessed){
+        for (Character c : LETTERS_IN_ALPHABET){
+            if(c.equals(letterGuessed.charAt(0))){
+                return true;
+            }
+        }
+        return false;
+    }
 
     private List<Character> userCharDisplay = new ArrayList<>();
     public Character[] getUserCharDisplay() {
