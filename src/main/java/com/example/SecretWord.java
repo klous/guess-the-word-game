@@ -19,14 +19,26 @@ public class SecretWord {
     private final Character[] LETTERS_IN_ALPHABET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     // create a list of letters in the alphabet to keep track of letters NOT Guessed. As letters are guessed, remove them from this list.
+    //todo update this as letters are guessed
+    //todo check this list before taking away a guess or checking the word
     private List<Character> lettersNotGuessed = Arrays.asList(LETTERS_IN_ALPHABET);
-
-
-    private List<Character> userCharDisplay = new ArrayList<>();
+    public Character[] getLettersNotGuessed() {
+        // take the list the user letter display is being stored in and return an array
+        Character[] lettersNotGuessedArray = new Character[lettersNotGuessed.size()];
+        lettersNotGuessedArray = userCharDisplay.toArray(lettersNotGuessedArray);
+        return lettersNotGuessedArray;
+    }
 
     private List<Character> secretCharTracker = new ArrayList<>();
 
 
+    private List<Character> userCharDisplay = new ArrayList<>();
+    public Character[] getUserCharDisplay() {
+        // take the list the user Char display is being stored in and return an array
+        Character[] userCharArray = new Character[userCharDisplay.size()];
+        userCharArray = userCharDisplay.toArray(userCharArray);
+        return userCharArray;
+    }
     // returns the display array
     //todo just make a toString @Override method ?
 
@@ -77,17 +89,20 @@ public class SecretWord {
         return getPrettyStringDisplay();
     }
 
-
-    // Create / construct a new com.example.SecretWord Object
-    public SecretWord(String word){
-        this.word = word;
-        //charDisplayArray = new ArrayList<>();
+    private void createSecretWordDisplay(){
         for(int i = 0 ; i< word.length();i++) {
             String s = word.substring(i, i+1);
-            //get the letter at index 0 and put in char value
+            // create the display for the user, should be same length as input word
             userCharDisplay.add(i,'_');
             secretCharTracker.add(i, s.toLowerCase().charAt(0));
         }
+    }
+    // Create / construct a new com.example.SecretWord Object
+    public SecretWord(String word){
+        // make sure word being stored is lowercase
+        this.word = word.toLowerCase();
+
+        createSecretWordDisplay();
 
         // set the number of guesses at 7
         this.numGuessesRemaining = 7;
