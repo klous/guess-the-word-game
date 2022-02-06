@@ -9,11 +9,7 @@ public class GuessWord {
         // purpose of program to let the user guess letters to a secret word, one a time
         // Users will have a limited number of guesses, program will keep track of letters that are wrong
 
-        SecretWord theSecretWord = new SecretWord("Constellation");
-        System.out.println("This is the pretty display of word above: ");
-        System.out.println(theSecretWord.getPrettyStringDisplay());
-        theSecretWord.makeGuess("l");
-        System.out.println(theSecretWord.getPrettyStringDisplay());
+        //todo add a new runGame method wtih a while loop that will properly use the new classes
 //        System.out.println("Welcome to the word guessing game! You'll guess one letter at a time.");
 //        boolean playGame = true;
 //        while(playGame) {
@@ -23,6 +19,7 @@ public class GuessWord {
     }
 
     private static boolean runGame() {
+        //todo this ALL needs to be removed and cleaned up to use the now functioning classes
         Random rand = new Random(); // create instance of the Random Class called rand
         Scanner scanner = new Scanner(System.in);
         // initially use an array to store the words, separated by comma. like: word,another,third
