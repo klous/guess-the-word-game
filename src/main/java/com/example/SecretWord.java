@@ -1,3 +1,5 @@
+package com.example;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -76,7 +78,7 @@ public class SecretWord {
     }
 
 
-    // Create / construct a new SecretWord Object
+    // Create / construct a new com.example.SecretWord Object
     public SecretWord(String word){
         this.word = word;
         //charDisplayArray = new ArrayList<>();
