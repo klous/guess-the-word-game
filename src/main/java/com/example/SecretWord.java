@@ -11,6 +11,7 @@ public class SecretWord {
     public String getWord() {return word;}
     public void setWord(String word) {this.word = word;}
 
+
     private int numGuessesRemaining;
     public int getNumGuessesRemaining() {return numGuessesRemaining;}
     // holds the display of the secret word
@@ -102,6 +103,18 @@ public class SecretWord {
         lettersNotGuessed = newLettersNotGuessed;
     }
 
+    public int getNumRemainingLetters(){
+        int numberOfLettersRemaining = 0;
+        for(int i = 0; i< secretCharTracker.size(); i++){
+            String s = String.valueOf(secretCharTracker.get(i));
+            // if an underscore is found, representing a not found letter, add to numberOfLettersRemainingCounter
+            if (s.equals("_")) {
+                numberOfLettersRemaining ++;
+            }
+        }
+        return numberOfLettersRemaining;
+    }
+
     //make a guess and return a String of the updated word display
     public String makeGuess(String guessedLetter){
         String returnString = "";
@@ -117,7 +130,8 @@ public class SecretWord {
                 if(guessedLetter.equalsIgnoreCase(secretCharTracker.get(i).toString())){
                     userCharDisplay.set(i, guessedLetter.toLowerCase().charAt(0));
                     secretCharTracker.set(i, '*');
-                    // also need to update our alphabet tracker
+                    //todo make unit test for this
+                    updateLettersNotGuessed(guessedLetter.charAt(0));
                 }
             }
         }
