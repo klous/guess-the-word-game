@@ -40,21 +40,26 @@ public class GuessWord {
 
             System.out.println("********* Number of Wrong Guesses left: " + numOfGuessesLeft + "  *********");
             System.out.println();
-            System.out.println("********* Letters Not Guessed Yet*********");
-            System.out.println(secretWordObject.getLettersNotGuessed());
+            System.out.println("********* Letters Already Guessed *********");
+            System.out.println(secretWordObject.getLettersGuessedString());
             System.out.println();
-            //todo put the part in about Scanner getting input for the game.
             // display the ______e with any letters already successfully guessed.
+            System.out.println(secretWordObject.toString());
+
+            //todo put the part in about Scanner getting input for the game.
+            System.out.println("What letter do you guess?");
+            String strGuessedLetter = scanner.nextLine();
+            secretWordObject.makeGuess(strGuessedLetter);
 
 
-            if (numOfLettersLeft == 0) {
+            if (secretWordObject.getNumRemainingLetters() == 0) {
                 String finalDisplay = secretWordObject.toString();
                 System.out.println();
                 System.out.println(finalDisplay);
                 System.out.println("**********************************");
                 System.out.println("*****   CONGRATS, YOU WON!   *****");
                 System.out.println("**********************************");
-            } else if (numOfGuessesLeft == 0) {
+            } else if (secretWordObject.getNumGuessesRemaining() == 0) {
                 System.out.println("**********************************");
                 System.out.println("*****   SORRY, YOU LOSE!!   ******");
                 System.out.println("**********************************");

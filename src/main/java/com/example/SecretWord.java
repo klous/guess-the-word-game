@@ -17,12 +17,34 @@ public class SecretWord {
     // holds the display of the secret word
    // private char[] displayArray;
 
+    private List<Character> lettersGuessed;
+
+    private Character[] getLettersGuessed(){
+        Character[] lettersGuessedArray = new Character[lettersGuessed.size()];
+        lettersGuessedArray = lettersGuessed.toArray(lettersGuessedArray);
+        return lettersGuessedArray;
+    }
+
+    private void updateLettersGuessed(Character c){
+        lettersGuessed.add(c);
+    }
+
+    public String getLettersGuessedString() {
+        // take the list the user letter display is being stored in and return an array
+        String returnString = "";
+        for(Character c : lettersGuessed){
+            returnString += c.toString();
+        }
+        return returnString;
+    }
+
+
     private final Character[] LETTERS_IN_ALPHABET = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     // create a list of letters in the alphabet to keep track of letters NOT Guessed. As letters are guessed, remove them from this list.
     private List<Character> lettersNotGuessed = Arrays.asList(LETTERS_IN_ALPHABET);
-    // this needs
-    public Character[] getLettersNotGuessed() {
+
+    private Character[] getLettersNotGuessed() {
         // take the list the user letter display is being stored in and return an array
         Character[] lettersNotGuessedArray = new Character[lettersNotGuessed.size()];
         lettersNotGuessedArray = userCharDisplay.toArray(lettersNotGuessedArray);
@@ -50,16 +72,14 @@ public class SecretWord {
     }
 
     private List<Character> userCharDisplay = new ArrayList<>();
+    //todo probably doesn't need to be public method
     public Character[] getUserCharDisplay() {
         // take the list the user Char display is being stored in and return an array
         Character[] userCharArray = new Character[userCharDisplay.size()];
         userCharArray = userCharDisplay.toArray(userCharArray);
         return userCharArray;
     }
-    // returns the display array
-    //todo just make a toString @Override method ?
 
-    // I think a character list can be converted to a String more directly
     @Override
     public String toString(){
         String returnString = "";
@@ -82,6 +102,7 @@ public class SecretWord {
         for(Character c : secretCharTracker){
             if(guessedLetter.equalsIgnoreCase(c.toString())){
                 guessinWord = true;
+
                 updateLettersNotGuessed(guessedLetter.charAt(0));
             }
         }
@@ -102,6 +123,8 @@ public class SecretWord {
         }
         return isLetterGuessedWrongBefore;
     }
+
+
 
     private void updateLettersNotGuessed(Character c){
         List<Character> newLettersNotGuessed = new ArrayList<>();
@@ -140,8 +163,10 @@ public class SecretWord {
                 if(guessedLetter.equalsIgnoreCase(secretCharTracker.get(i).toString())){
                     userCharDisplay.set(i, guessedLetter.toLowerCase().charAt(0));
                     secretCharTracker.set(i, '*');
-                    //todo make unit test for this
+                    //remove the letters NOT guessed, and just keep a running total of the guessed letters to display
                     updateLettersNotGuessed(guessedLetter.charAt(0));
+                    //todo make unit test for this
+                    updateLettersGuessed(guessedLetter.charAt(0));
                 }
             }
         }
@@ -165,6 +190,7 @@ public class SecretWord {
 
         // set the number of guesses at 7
         this.numGuessesRemaining = 7;
+        this.lettersGuessed = new ArrayList<>() ;
 
     }
 

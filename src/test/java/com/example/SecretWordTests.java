@@ -82,7 +82,7 @@ public class SecretWordTests {
     public void test_SecretWord_constructor_initial_secret_display_creates_right_number_of_underscores_for_num_letters(){
         String word = "characters";
         secretWord = new SecretWord((word));
-        String myDisplay = secretWord.getPrettyStringDisplay();
+        String myDisplay = secretWord.toString();
 
         String expectingInitialSecretDisplay = "__________";
         Assert.assertEquals("word is: \"characters\", expecting it to create user word display: \"__________\"",expectingInitialSecretDisplay, myDisplay);
