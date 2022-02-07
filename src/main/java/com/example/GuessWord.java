@@ -38,6 +38,7 @@ public class GuessWord {
 
             numOfLettersLeft = secretWordObject.getNumGuessesRemaining();
 
+            //todo turn this into a mehtod
             System.out.println("********* Number of Wrong Guesses left: " + numOfGuessesLeft + "  *********");
             System.out.println();
             System.out.println("********* Letters Already Guessed *********");
@@ -56,6 +57,7 @@ public class GuessWord {
                 String finalDisplay = secretWordObject.toString();
                 System.out.println();
                 System.out.println(finalDisplay);
+                //todo turn this into a method for printing the banner
                 System.out.println("**********************************");
                 System.out.println("*****   CONGRATS, YOU WON!   *****");
                 System.out.println("**********************************");
