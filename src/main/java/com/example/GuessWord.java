@@ -20,6 +20,7 @@ public class GuessWord {
     private static boolean runTheGame() {
         //call the class to get the random word
         Random rand = new Random(); // create instance of the Random Class called rand
+
         Scanner scanner = new Scanner(System.in);
         String[] wordList = new String[]{"fresh", "couch", "third", "yellow", "football", "proxy", "process", "penalties", "conversion"};
         //String[] wordList = new String[] {"goodbye", "hello"};
@@ -28,7 +29,6 @@ public class GuessWord {
         String myWord = wordList[randomIndex];
 
 
-        //Scanner scanner = new Scanner(System.in);
         //pass the string into the SecretWord constructor to create the objects for the game
         SecretWord secretWordObject = new SecretWord(myWord);
         int numOfLettersLeft = secretWordObject.getNumGuessesRemaining();
@@ -46,7 +46,7 @@ public class GuessWord {
             // display the ______e with any letters already successfully guessed.
             System.out.println(secretWordObject.toString());
 
-            //todo put the part in about Scanner getting input for the game.
+            //todo add in part to Try, Except - check against custom LetterValidationException
             System.out.println("What letter do you guess?");
             String strGuessedLetter = scanner.nextLine();
             secretWordObject.makeGuess(strGuessedLetter);
