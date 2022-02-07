@@ -21,11 +21,20 @@ public class SecretWord {
 
     // create a list of letters in the alphabet to keep track of letters NOT Guessed. As letters are guessed, remove them from this list.
     private List<Character> lettersNotGuessed = Arrays.asList(LETTERS_IN_ALPHABET);
+    // this needs
     public Character[] getLettersNotGuessed() {
         // take the list the user letter display is being stored in and return an array
         Character[] lettersNotGuessedArray = new Character[lettersNotGuessed.size()];
         lettersNotGuessedArray = userCharDisplay.toArray(lettersNotGuessedArray);
         return lettersNotGuessedArray;
+    }
+
+    public String getLettersNotGuessedString() {
+        // take the list the user letter display is being stored in and return an array
+        String returnString = "";
+        Character[] lettersNotGuessedArray = new Character[lettersNotGuessed.size()];
+        lettersNotGuessedArray = userCharDisplay.toArray(lettersNotGuessedArray);
+        return returnString;
     }
 
     private List<Character> secretCharTracker = new ArrayList<>();
@@ -51,7 +60,8 @@ public class SecretWord {
     //todo just make a toString @Override method ?
 
     // I think a character list can be converted to a String more directly
-    public String getPrettyStringDisplay(){
+    @Override
+    public String toString(){
         String returnString = "";
         for (int i = 0; i < userCharDisplay.size(); i++) {
             String letter = Character.toString(userCharDisplay.get(i));
@@ -120,11 +130,11 @@ public class SecretWord {
         String returnString = "";
          //see if the letter was guessed incorrectly before, just return the display, go no further
         if(isLetterGuessedWrongBefore(guessedLetter)){
-            return getPrettyStringDisplay();
+            return toString();
         }
         // if letter IS NOT in the remaining letters as checked in the above method, then just return the string
         if(!isLetterInWord(guessedLetter)){
-            return getPrettyStringDisplay();
+            return toString();
         }else{ // letter is IN the thing, now need to check for duplicates and update the secret display and the one shown to user
             for (int i = 0; i< userCharDisplay.size(); i++){
                 if(guessedLetter.equalsIgnoreCase(secretCharTracker.get(i).toString())){
@@ -135,7 +145,7 @@ public class SecretWord {
                 }
             }
         }
-        return getPrettyStringDisplay();
+        return toString();
     }
 
     private void createSecretWordDisplay(){

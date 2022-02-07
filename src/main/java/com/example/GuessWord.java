@@ -43,9 +43,12 @@ public class GuessWord {
             System.out.println("********* Letters Not Guessed Yet*********");
             System.out.println(secretWordObject.getLettersNotGuessed());
             System.out.println();
+            //todo put the part in about Scanner getting input for the game.
+            // display the ______e with any letters already successfully guessed.
+
 
             if (numOfLettersLeft == 0) {
-                String finalDisplay = secretWordObject.getPrettyStringDisplay();
+                String finalDisplay = secretWordObject.toString();
                 System.out.println();
                 System.out.println(finalDisplay);
                 System.out.println("**********************************");

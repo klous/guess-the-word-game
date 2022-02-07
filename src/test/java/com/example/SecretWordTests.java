@@ -8,7 +8,7 @@ public class SecretWordTests {
 
 
     @Test
-    public void test_makeGuess_word_is_table_guessing_single_letter_with_single_occurence(){
+    public void test_makeGuess_word_is_table_guessing_single_letter_with_single_occurrence(){
         // create / construct new secretWord object
         secretWord = new SecretWord("table");
 
@@ -67,7 +67,7 @@ public class SecretWordTests {
     }
 
     @Test
-    public void test_makeGuess_word_is_hello_guessing_single_letter_with_two_occurences(){
+    public void test_makeGuess_word_is_hello_guessing_single_l_with_two_ls_in_word(){
         // create / construct new secretWord object
         secretWord = new SecretWord("hello");
         //guess a letter
