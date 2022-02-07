@@ -14,8 +14,6 @@ public class SecretWord {
 
     private int numGuessesRemaining;
     public int getNumGuessesRemaining() {return numGuessesRemaining;}
-    // holds the display of the secret word
-   // private char[] displayArray;
 
     private List<Character> lettersGuessed;
 
@@ -98,19 +96,16 @@ public class SecretWord {
     // method to check
     private boolean isLetterInWord(String guessedLetter){
         //guess was in the remaining letters or not
-        boolean guessinWord = false;
+        boolean guessInWord = false;
         for(Character c : secretCharTracker){
             if(guessedLetter.equalsIgnoreCase(c.toString())){
-                guessinWord = true;
-
+                guessInWord = true;
                 updateLettersNotGuessed(guessedLetter.charAt(0));
             }
         }
-        // subtract 1 from number of guesses remaining when letter is NOT in word
-        numGuessesRemaining --;
         // update the letters guessed display
         updateLettersNotGuessed(guessedLetter.charAt(0));
-        return guessinWord;
+        return guessInWord;
     }
 
     private boolean isLetterGuessedWrongBefore(String guessedLetter){
@@ -124,8 +119,6 @@ public class SecretWord {
         return isLetterGuessedWrongBefore;
     }
 
-
-
     private void updateLettersNotGuessed(Character c){
         List<Character> newLettersNotGuessed = new ArrayList<>();
         for(int i = 0; i<lettersNotGuessed.size(); i++){
@@ -136,12 +129,12 @@ public class SecretWord {
         lettersNotGuessed = newLettersNotGuessed;
     }
 
-    public int getNumRemainingLetters(){
+    public int getNumLettersRemaining(){
         int numberOfLettersRemaining = 0;
         for(int i = 0; i< secretCharTracker.size(); i++){
             String s = String.valueOf(secretCharTracker.get(i));
-            // if an underscore is found, representing a not found letter, add to numberOfLettersRemainingCounter
-            if (s.equals("_")) {
+            // if a STAR is found representing a not found letter, add to numberOfLettersRemainingCounter
+            if (!s.equals("*")) {
                 numberOfLettersRemaining ++;
             }
         }
@@ -149,15 +142,18 @@ public class SecretWord {
     }
 
     //make a guess and return a String of the updated word display
-    public String makeGuess(String guessedLetter){
-        String returnString = "";
+    public void makeGuess(String guessedLetter){
+//        String returnString = "";
          //see if the letter was guessed incorrectly before, just return the display, go no further
-        if(isLetterGuessedWrongBefore(guessedLetter)){
-            return toString();
-        }
+//        if(isLetterGuessedWrongBefore(guessedLetter)){
+//            //return toString();
+//        }
         // if letter IS NOT in the remaining letters as checked in the above method, then just return the string
-        if(!isLetterInWord(guessedLetter)){
-            return toString();
+
+        // Letter guessed is NOT in word -->
+        if(!isLetterGuessedWrongBefore(guessedLetter) && !isLetterInWord(guessedLetter)){
+            numGuessesRemaining --;
+            //return toString();
         }else{ // letter is IN the thing, now need to check for duplicates and update the secret display and the one shown to user
             for (int i = 0; i< userCharDisplay.size(); i++){
                 if(guessedLetter.equalsIgnoreCase(secretCharTracker.get(i).toString())){
@@ -170,7 +166,7 @@ public class SecretWord {
                 }
             }
         }
-        return toString();
+       // return toString();
     }
 
     private void createSecretWordDisplay(){
@@ -185,7 +181,7 @@ public class SecretWord {
     public SecretWord(String word){
         // make sure word being stored is lowercase
         this.word = word.toLowerCase();
-
+        // initializes the char[] display to users
         createSecretWordDisplay();
 
         // set the number of guesses at 7

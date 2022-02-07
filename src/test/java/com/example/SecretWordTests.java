@@ -13,7 +13,8 @@ public class SecretWordTests {
         secretWord = new SecretWord("table");
 
         //guess a letter
-        String actual = secretWord.makeGuess("b");
+        secretWord.makeGuess("b");
+        String actual = secretWord.toString();
         String expectedString = "__b__";
 
         Assert.assertEquals("The secret word is \"table\", guess is \"b\", expecting return string: \"__b__\"", expectedString, actual);
@@ -26,8 +27,10 @@ public class SecretWordTests {
         secretWord = new SecretWord("table");
 
         //guess a letter
-        String actual = secretWord.makeGuess("b");
-        actual = secretWord.makeGuess("e");
+        secretWord.makeGuess("b");
+        secretWord.makeGuess("e");
+
+        String actual = secretWord.toString();
         String expectedString = "__b_e";
 
         Assert.assertEquals("The secret word is \"table\", first guess is \"b\", then \"e\" expecting return string: \"__b_e\"", expectedString, actual);
@@ -56,13 +59,13 @@ public class SecretWordTests {
         int startingNumberOfGuesses = secretWord.getNumGuessesRemaining();
         //guess a letter
         secretWord.makeGuess("y");
-        int updatedNumOfGuessesLeft = secretWord.getNumGuessesRemaining();
+        int actualNumOfGuessesLeft = secretWord.getNumGuessesRemaining();
         secretWord.makeGuess("y");
-        updatedNumOfGuessesLeft = secretWord.getNumGuessesRemaining();
+        actualNumOfGuessesLeft = secretWord.getNumGuessesRemaining();
 
         String message = "The starting number of guesses was " + startingNumberOfGuesses + " then it should have gone down by 1";
 
-        Assert.assertEquals(message, startingNumberOfGuesses-1, updatedNumOfGuessesLeft );
+        Assert.assertEquals(message, startingNumberOfGuesses-1, actualNumOfGuessesLeft );
 
     }
 
@@ -71,7 +74,8 @@ public class SecretWordTests {
         // create / construct new secretWord object
         secretWord = new SecretWord("hello");
         //guess a letter
-        String actual = secretWord.makeGuess("l");
+        secretWord.makeGuess("l");
+        String actual = secretWord.toString();
         String expectedString = "__ll_";
 
         Assert.assertEquals("The secret word is \"hello\", guess is \"l\", expecting return string: \"__ll_\"", expectedString, actual);
@@ -88,5 +92,6 @@ public class SecretWordTests {
         Assert.assertEquals("word is: \"characters\", expecting it to create user word display: \"__________\"",expectingInitialSecretDisplay, myDisplay);
 
     }
+
 
 }

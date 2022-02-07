@@ -33,12 +33,12 @@ public class GuessWord {
         SecretWord secretWordObject = new SecretWord(myWord);
         int numOfLettersLeft = secretWordObject.getNumGuessesRemaining();
         int numOfGuessesLeft = secretWordObject.getNumGuessesRemaining();
+
         boolean playAgain = false;
         while (secretWordObject.getNumGuessesRemaining() > 0 && numOfLettersLeft > 0) {
 
-            numOfLettersLeft = secretWordObject.getNumGuessesRemaining();
 
-            //todo turn this into a mehtod
+            //todo turn this into a method
             System.out.println("********* Number of Wrong Guesses left: " + numOfGuessesLeft + "  *********");
             System.out.println();
             System.out.println("********* Letters Already Guessed *********");
@@ -50,10 +50,15 @@ public class GuessWord {
             //todo add in part to Try, Except - check against custom LetterValidationException
             System.out.println("What letter do you guess?");
             String strGuessedLetter = scanner.nextLine();
+
+            // make a guess and return it here -->
             secretWordObject.makeGuess(strGuessedLetter);
-
-
-            if (secretWordObject.getNumRemainingLetters() == 0) {
+            System.out.println(secretWordObject.toString());
+            // System.out.println(secretWordObject.toString());
+            //getting updated number of letters left in the word still to be guessed
+            numOfLettersLeft = secretWordObject.getNumLettersRemaining();
+            numOfGuessesLeft = secretWordObject.getNumGuessesRemaining();
+            if (numOfLettersLeft == 0) {
                 String finalDisplay = secretWordObject.toString();
                 System.out.println();
                 System.out.println(finalDisplay);
@@ -61,7 +66,7 @@ public class GuessWord {
                 System.out.println("**********************************");
                 System.out.println("*****   CONGRATS, YOU WON!   *****");
                 System.out.println("**********************************");
-            } else if (secretWordObject.getNumGuessesRemaining() == 0) {
+            } else if (numOfGuessesLeft == 0) {
                 System.out.println("**********************************");
                 System.out.println("*****   SORRY, YOU LOSE!!   ******");
                 System.out.println("**********************************");
@@ -69,6 +74,7 @@ public class GuessWord {
                 System.out.println("The word was: " + myWord);
 
             }
+        }
             System.out.println("Would you like to play again?");
             System.out.println("(y)es or (n)o");
             String inputPlayAgain = scanner.nextLine();
@@ -76,8 +82,6 @@ public class GuessWord {
             if (inputPlayAgain.toLowerCase().equals("y")) {
                 playAgain = true;
             }
-
-        }
         return playAgain;
     }
 }
