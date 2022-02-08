@@ -127,19 +127,21 @@ public class SecretWordTests {
     }
 
     @Test
-    public void test_makeGuess_properly_updates_the_letters_already_guessed_when_double_letter_present(){
+    public void test_makeGuess_properly_updates_the_letters_already_guessed_when_guessing_twice(){
         String word = "hello";
         secretWord = new SecretWord((word));
-        test_makeGuess_same_wrong_letter_guessed_twice_in_arrow_should_should_only_reduce_number_of_guesses_by_1();
-        secretWord.makeGuess("l");
+        secretWord.makeGuess("z");
 
+        secretWord.makeGuess("z");
+        secretWord.makeGuess("p");
+
+        Character[] expectedLettersGuessed = new Character[2];
+        expectedLettersGuessed[0] = 'z';
+        expectedLettersGuessed[1] = 'p';
         Character[] actualLettersGuessed = secretWord.getLettersGuessed();
 
-        Character[] expectedLettersGuessed = new Character[1];
-        expectedLettersGuessed[0] = 'l';
+        Assert.assertArrayEquals("expecting array of {'z', 'p} after one letter guessed", expectedLettersGuessed, actualLettersGuessed);
 
-        Assert.assertArrayEquals("expecting array of {'l'} after one letter guessed", expectedLettersGuessed, actualLettersGuessed);
-        
     }
 
 }

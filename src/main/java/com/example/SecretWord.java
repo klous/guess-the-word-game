@@ -8,10 +8,6 @@ public class SecretWord {
 
     // create the word
     private String word;
-    public String getWord() {return word;}
-    public void setWord(String word) {this.word = word;}
-
-
     private int numGuessesRemaining;
     public int getNumGuessesRemaining() {return numGuessesRemaining;}
 
@@ -24,7 +20,9 @@ public class SecretWord {
     }
 
     private void addLetterGuessed(Character c){
-        lettersGuessed.add(c);
+        if (!lettersGuessed.contains(c)){
+            lettersGuessed.add(c);
+        }
     }
 
 
@@ -43,21 +41,6 @@ public class SecretWord {
     // create a list of letters in the alphabet to keep track of letters NOT Guessed. As letters are guessed, remove them from this list.
     private List<Character> lettersNotGuessed = Arrays.asList(LETTERS_IN_ALPHABET);
 
-    /*private Character[] getLettersNotGuessed() {
-        // take the list the user letter display is being stored in and return an array
-        Character[] lettersNotGuessedArray = new Character[lettersNotGuessed.size()];
-        lettersNotGuessedArray = userCharDisplay.toArray(lettersNotGuessedArray);
-        return lettersNotGuessedArray;
-    }
-
-    public String getLettersNotGuessedString() {
-        // take the list the user letter display is being stored in and return an array
-        String returnString = "";
-        Character[] lettersNotGuessedArray = new Character[lettersNotGuessed.size()];
-        lettersNotGuessedArray = userCharDisplay.toArray(lettersNotGuessedArray);
-        return returnString;
-    }*/
-
     private List<Character> secretCharTracker = new ArrayList<>();
 
     //todo implement this method that checks if letter guessed is in the alphabet
@@ -71,13 +54,14 @@ public class SecretWord {
     }
 
     private List<Character> userCharDisplay = new ArrayList<>();
+
     //todo probably doesn't need to be public method
-    public Character[] getUserCharDisplay() {
+/*    public Character[] getUserCharDisplay() {
         // take the list the user Char display is being stored in and return an array
         Character[] userCharArray = new Character[userCharDisplay.size()];
         userCharArray = userCharDisplay.toArray(userCharArray);
         return userCharArray;
-    }
+    }*/
 
     @Override
     public String toString(){
@@ -85,11 +69,6 @@ public class SecretWord {
         for (int i = 0; i < userCharDisplay.size(); i++) {
             String letter = Character.toString(userCharDisplay.get(i));
             returnString += letter;
-
-            //todo can clean this up by changing the stopping point above ^
-//            if (i != charDisplayArray.size() - 1) { // if index is NOT at the last spot, add a space to the string being built
-//                returnString +=" ";
-//            }
         }
      return returnString;
     }
@@ -115,6 +94,7 @@ public class SecretWord {
         for (Character c : lettersNotGuessed){
             if(guessedLetter.equalsIgnoreCase(c.toString())){
                 isLetterGuessedWrongBefore = false;
+                break;
             }
         }
         return isLetterGuessedWrongBefore;
@@ -122,9 +102,9 @@ public class SecretWord {
 
     private void updateLettersNotGuessed(Character c){
         List<Character> newLettersNotGuessed = new ArrayList<>();
-        for(int i = 0; i<lettersNotGuessed.size(); i++){
-            if (!lettersNotGuessed.get(i).equals(c)){
-                newLettersNotGuessed.add(lettersNotGuessed.get(i));
+        for (Character character : lettersNotGuessed) {
+            if (!character.equals(c)) {
+                newLettersNotGuessed.add(character);
             }
         }
         lettersNotGuessed = newLettersNotGuessed;
@@ -132,11 +112,11 @@ public class SecretWord {
 
     public int getNumLettersRemaining(){
         int numberOfLettersRemaining = 0;
-        for(int i = 0; i< secretCharTracker.size(); i++){
-            String s = String.valueOf(secretCharTracker.get(i));
+        for (Character character : secretCharTracker) {
+            String s = String.valueOf(character);
             // if a STAR is found representing a not found letter, add to numberOfLettersRemainingCounter
             if (!s.equals("*")) {
-                numberOfLettersRemaining ++;
+                numberOfLettersRemaining++;
             }
         }
         return numberOfLettersRemaining;
@@ -147,23 +127,17 @@ public class SecretWord {
 
         //todo create helper function to make sure the input letter is a letter of alphabet
 
-        //todo check if the letter was guessed previously
         if(!isLetterGuessedWrongBefore(guessedLetter) && !isLetterInWord(guessedLetter)){
             numGuessesRemaining --;
-            //return toString();
+            addLetterGuessed(guessedLetter.charAt(0));
         }else{ // letter is IN the thing, now need to check for duplicates and update the secret display and the one shown to user
             for (int i = 0; i< userCharDisplay.size(); i++){
                 if(guessedLetter.equalsIgnoreCase(secretCharTracker.get(i).toString())){
                     userCharDisplay.set(i, guessedLetter.toLowerCase().charAt(0));
                     secretCharTracker.set(i, '*');
-                    //remove the letters NOT guessed, and just keep a running total of the guessed letters to display
-                    updateLettersNotGuessed(guessedLetter.charAt(0));
-                    //todo make unit test for this
-                    addLetterGuessed(guessedLetter.charAt(0));
                 }
             }
         }
-       // return toString();
     }
 
     private void createSecretWordDisplay(){
