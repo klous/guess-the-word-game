@@ -39,13 +39,15 @@ public class GuessWord {
 
 
             //todo turn this into a method
-            System.out.println("********* Number of Wrong Guesses left: " + numOfGuessesLeft + "  *********");
+            System.out.println("************ Number of Wrong Guesses left: " + numOfGuessesLeft + "  ************");
             System.out.println();
-            System.out.println("********* Letters Already Guessed *********");
+            System.out.println("************** Letters Already Guessed ***********************");
             System.out.println(secretWordObject.getLettersGuessedString());
+            System.out.println("*********************************************************");
             System.out.println();
             // display the ______e with any letters already successfully guessed.
-            System.out.println(secretWordObject.toString());
+            System.out.println(secretWordObject);
+           // System.out.println(secretWordObject.toString());
 
             //todo add in part to Try, Except - check against custom LetterValidationException
             System.out.println("What letter do you guess?");
@@ -53,15 +55,17 @@ public class GuessWord {
 
             // make a guess and return it here -->
             secretWordObject.makeGuess(strGuessedLetter);
-            System.out.println(secretWordObject.toString());
+            //System.out.println(secretWordObject.toString());
+            // the SecretWord Class has a toString Override method, so just do this -->
+            System.out.println(secretWordObject);
             // System.out.println(secretWordObject.toString());
             //getting updated number of letters left in the word still to be guessed
             numOfLettersLeft = secretWordObject.getNumLettersRemaining();
             numOfGuessesLeft = secretWordObject.getNumGuessesRemaining();
             if (numOfLettersLeft == 0) {
-                String finalDisplay = secretWordObject.toString();
+                //String finalDisplay = secretWordObject.toString();
                 System.out.println();
-                System.out.println(finalDisplay);
+                System.out.println(secretWordObject);
                 //todo turn this into a method for printing the banner
                 System.out.println("**********************************");
                 System.out.println("*****   CONGRATS, YOU WON!   *****");

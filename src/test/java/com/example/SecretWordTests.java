@@ -90,8 +90,56 @@ public class SecretWordTests {
 
         String expectingInitialSecretDisplay = "__________";
         Assert.assertEquals("word is: \"characters\", expecting it to create user word display: \"__________\"",expectingInitialSecretDisplay, myDisplay);
-
     }
 
+    @Test
+    public void test_updateLettersGuessed_decreases_number_of_guesses_remaining_by_1(){
+        String word = "hello";
+        secretWord = new SecretWord((word));
+        test_makeGuess_same_wrong_letter_guessed_twice_in_arrow_should_should_only_reduce_number_of_guesses_by_1();
+        secretWord.makeGuess("e");
+
+        int actualLettersRemaining = secretWord.getNumLettersRemaining();
+
+        int expectedLettersRemaining = 4;
+
+        Assert.assertEquals("word is: \"hello\", letters remaining to be 4 after 1 correct guess of \"e\"",expectedLettersRemaining, actualLettersRemaining);
+    }
+
+    @Test
+    public void test_updateLettersGuessed_decreases_number_of_guesses_remaining_by_1_even_when_same_letter_guessed_twice(){
+        String word = "hello";
+        secretWord = new SecretWord((word));
+        test_makeGuess_same_wrong_letter_guessed_twice_in_arrow_should_should_only_reduce_number_of_guesses_by_1();
+        secretWord.makeGuess("e");
+
+        int actualLettersRemaining = secretWord.getNumLettersRemaining();
+
+        int expectedLettersRemaining = 4;
+
+        Assert.assertEquals("word is: \"hello\", letters remaining to be 4 after 1 correct guess of \"e\"",expectedLettersRemaining, actualLettersRemaining);
+
+        //guess the letter e again
+        secretWord.makeGuess("e");
+        actualLettersRemaining = secretWord.getNumLettersRemaining();
+        expectedLettersRemaining = 4;
+        Assert.assertEquals("word is: \"hello\", letters remaining should be 4 after guessing \"e\" twice",expectedLettersRemaining, actualLettersRemaining);
+    }
+
+    @Test
+    public void test_makeGuess_properly_updates_the_letters_already_guessed_when_double_letter_present(){
+        String word = "hello";
+        secretWord = new SecretWord((word));
+        test_makeGuess_same_wrong_letter_guessed_twice_in_arrow_should_should_only_reduce_number_of_guesses_by_1();
+        secretWord.makeGuess("l");
+
+        Character[] actualLettersGuessed = secretWord.getLettersGuessed();
+
+        Character[] expectedLettersGuessed = new Character[1];
+        expectedLettersGuessed[0] = 'l';
+
+        Assert.assertArrayEquals("expecting array of {'l'} after one letter guessed", expectedLettersGuessed, actualLettersGuessed);
+        
+    }
 
 }

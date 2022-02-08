@@ -17,15 +17,16 @@ public class SecretWord {
 
     private List<Character> lettersGuessed;
 
-    private Character[] getLettersGuessed(){
+    public Character[] getLettersGuessed(){
         Character[] lettersGuessedArray = new Character[lettersGuessed.size()];
         lettersGuessedArray = lettersGuessed.toArray(lettersGuessedArray);
         return lettersGuessedArray;
     }
 
-    private void updateLettersGuessed(Character c){
+    private void addLetterGuessed(Character c){
         lettersGuessed.add(c);
     }
+
 
     public String getLettersGuessedString() {
         // take the list the user letter display is being stored in and return an array
@@ -42,7 +43,7 @@ public class SecretWord {
     // create a list of letters in the alphabet to keep track of letters NOT Guessed. As letters are guessed, remove them from this list.
     private List<Character> lettersNotGuessed = Arrays.asList(LETTERS_IN_ALPHABET);
 
-    private Character[] getLettersNotGuessed() {
+    /*private Character[] getLettersNotGuessed() {
         // take the list the user letter display is being stored in and return an array
         Character[] lettersNotGuessedArray = new Character[lettersNotGuessed.size()];
         lettersNotGuessedArray = userCharDisplay.toArray(lettersNotGuessedArray);
@@ -55,7 +56,7 @@ public class SecretWord {
         Character[] lettersNotGuessedArray = new Character[lettersNotGuessed.size()];
         lettersNotGuessedArray = userCharDisplay.toArray(lettersNotGuessedArray);
         return returnString;
-    }
+    }*/
 
     private List<Character> secretCharTracker = new ArrayList<>();
 
@@ -143,14 +144,10 @@ public class SecretWord {
 
     //make a guess and return a String of the updated word display
     public void makeGuess(String guessedLetter){
-//        String returnString = "";
-         //see if the letter was guessed incorrectly before, just return the display, go no further
-//        if(isLetterGuessedWrongBefore(guessedLetter)){
-//            //return toString();
-//        }
-        // if letter IS NOT in the remaining letters as checked in the above method, then just return the string
 
-        // Letter guessed is NOT in word -->
+        //todo create helper function to make sure the input letter is a letter of alphabet
+
+        //todo check if the letter was guessed previously
         if(!isLetterGuessedWrongBefore(guessedLetter) && !isLetterInWord(guessedLetter)){
             numGuessesRemaining --;
             //return toString();
@@ -162,7 +159,7 @@ public class SecretWord {
                     //remove the letters NOT guessed, and just keep a running total of the guessed letters to display
                     updateLettersNotGuessed(guessedLetter.charAt(0));
                     //todo make unit test for this
-                    updateLettersGuessed(guessedLetter.charAt(0));
+                    addLetterGuessed(guessedLetter.charAt(0));
                 }
             }
         }
