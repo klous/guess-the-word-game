@@ -1,13 +1,22 @@
 package com.example;
 
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class GuessWord {
     public static void main(String[] args) {
         // purpose of program to let the user guess letters to a secret word, one a time
         // Users will have a limited number of guesses, program will keep track of letters that are wrong
+        // load the words from the file into memory and store into a dictionary
+
+        // call the new method to load external files categories into a map of word:category
+        Map<String, String> myWordsAndCategories = loadWordsInMap();
+
+        //todo add functionality to randomly pick from the loaded in word map
+
+        //todo add functionality to display the category to the user
+
 
         System.out.println("Welcome to the word guessing game! You'll guess one letter at a time.");
         boolean playGame = true;
@@ -15,6 +24,29 @@ public class GuessWord {
             playGame = runTheGame();
         }
 
+    }
+
+    private static Map<String,String> loadWordsInMap() {
+        File wordsFile = new File("words_categories_list.csv");
+        Map<String, String> wordCategory = new HashMap<>();
+        try (Scanner fileReader = new Scanner(wordsFile)) {
+            //loop through the file and add each word to the dictionary of words
+            while(fileReader.hasNextLine()){
+                String line = fileReader.nextLine();
+                //if NOT the header line for the CSV:
+                if(!line.contains("word,category")){
+                    //add word and category to our HashMap
+                    String[] lineSplit = line.split(",");
+                    String word = lineSplit[0];
+                    String category = lineSplit[1];
+                    wordCategory.put(word,category);
+                }
+            }
+        }catch(FileNotFoundException e){
+            System.out.println("Did not find the file to load the words");
+            System.out.println(e.getMessage());
+        }
+        return wordCategory;
     }
 
     private static boolean runTheGame() {
