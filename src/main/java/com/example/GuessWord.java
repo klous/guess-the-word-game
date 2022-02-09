@@ -13,15 +13,17 @@ public class GuessWord {
         // call the new method to load external files categories into a map of word:category
         Map<String, String> myWordsAndCategories = loadWordsInMap();
 
-        //todo add functionality to randomly pick from the loaded in word map
+        // put the keys (words) into this list-->
 
-        //todo add functionality to display the category to the user
+
+        // convert the list into an array, likely a way to directly convert the keys to an array
+      //  String[] myWordsArray = myWordList.toArray(new String[0]);
 
 
         System.out.println("Welcome to the word guessing game! You'll guess one letter at a time.");
         boolean playGame = true;
         while (playGame) {
-            playGame = runTheGame();
+            playGame = runTheGame(myWordsAndCategories);
         }
 
     }
@@ -49,20 +51,34 @@ public class GuessWord {
         return wordCategory;
     }
 
-    private static boolean runTheGame() {
+    private static String randomlyPickWord(String[] wordList){
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(wordList.length);
+        return wordList[randomIndex];
+    }
+
+
+    private static boolean runTheGame(Map<String, String> wordListAndCategories) {
         //call the class to get the random word
-        Random rand = new Random(); // create instance of the Random Class called rand
+//        Random rand = new Random(); // create instance of the Random Class called rand
 
         Scanner scanner = new Scanner(System.in);
         //String[] wordList = new String[]{"fresh", "couch", "third", "yellow", "football", "proxy", "process", "penalties", "conversion"};
-        String[] wordList = new String[] {"goodbye", "hello"};
+       // String[] wordList = new String[] {"goodbye", "hello"};
         // create random index from the word List array
-        int randomIndex = rand.nextInt(wordList.length);
-        String myWord = wordList[randomIndex];
+//        int randomIndex = rand.nextInt(wordList.length);
+//        String myWord = wordList[randomIndex];
+
+        List<String> myWordList = new ArrayList<>(wordListAndCategories.keySet());
+
+        String[] myWordsArray = myWordList.toArray(new String[0]);
+        String myWord = randomlyPickWord(myWordsArray);
+        String myCategory = wordListAndCategories.get(myWord);
+
 
 
         //pass the string into the SecretWord constructor to create the objects for the game
-        SecretWord secretWordObject = new SecretWord(myWord);
+        SecretWord secretWordObject = new SecretWord(myWord, myCategory);
         int numOfLettersLeft = secretWordObject.getNumGuessesRemaining();
         int numOfGuessesLeft = secretWordObject.getNumGuessesRemaining();
 
@@ -78,6 +94,8 @@ public class GuessWord {
             System.out.println("*********************************************************");
             System.out.println();
             System.out.println(secretWordObject);
+
+            System.out.println("Category: " + secretWordObject.getCategory());
 
             //todo add in part to Try, Except - check against custom LetterValidationException
             System.out.println("What letter do you guess?");
@@ -112,7 +130,7 @@ public class GuessWord {
             System.out.println("(y)es or (n)o");
             String inputPlayAgain = scanner.nextLine();
 
-            if (inputPlayAgain.toLowerCase().equals("y")) {
+            if (inputPlayAgain.equalsIgnoreCase("y")) {
                 playAgain = true;
             }
         return playAgain;

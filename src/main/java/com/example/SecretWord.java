@@ -8,8 +8,13 @@ public class SecretWord {
 
     // create the word
     private String word;
+    private String category;
+    public String getCategory() {return category;}
+
     private int numGuessesRemaining;
     public int getNumGuessesRemaining() {return numGuessesRemaining;}
+
+
 
     private List<Character> lettersGuessed;
 
@@ -149,12 +154,23 @@ public class SecretWord {
         }
     }
     // Create / construct a new com.example.SecretWord Object
+    public SecretWord(String word, String category){
+        // make sure word being stored is lowercase
+        this.word = word.toLowerCase();
+        // initializes the char[] display to users
+        createSecretWordDisplay();
+        this.category = category;
+        // set the number of guesses at 7
+        this.numGuessesRemaining = 7;
+        this.lettersGuessed = new ArrayList<>() ;
+
+    }
+
     public SecretWord(String word){
         // make sure word being stored is lowercase
         this.word = word.toLowerCase();
         // initializes the char[] display to users
         createSecretWordDisplay();
-
         // set the number of guesses at 7
         this.numGuessesRemaining = 7;
         this.lettersGuessed = new ArrayList<>() ;
