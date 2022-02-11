@@ -125,6 +125,41 @@ public class SecretWordTests {
         expectedLettersRemaining = 4;
         Assert.assertEquals("word is: \"hello\", letters remaining should be 4 after guessing \"e\" twice",expectedLettersRemaining, actualLettersRemaining);
     }
+    @Test
+    public void test_isLetter_checks_properly_for_a_valid_letter_regardless_of_casing(){
+        String word = "hello";
+        secretWord = new SecretWord((word));
+
+        secretWord.makeGuess(">");
+
+        secretWord.makeGuess("C"); // should decrease by 1 wrong guess here
+
+        secretWord.makeGuess("@");
+
+        int actualguessesRemaining = secretWord.getNumGuessesRemaining();
+
+        int expectedGuessesRemaining = 6;
+
+        Assert.assertEquals("word is: \"hello\", guesses remaining to be decreased by 1 after guessing \">\", \"C\", then \"@\" characters",expectedGuessesRemaining, actualguessesRemaining);
+
+    }
+
+
+
+    @Test
+    public void test_makeGuess_if_character_guessed_outside_of_alphabet_should_not_decrease_guesses_left(){
+        String word = "hello";
+        secretWord = new SecretWord((word));
+
+        secretWord.makeGuess(">");
+
+        int actualguessesRemaining = secretWord.getNumGuessesRemaining();
+
+        int expectedGuessesRemaining = 7;
+
+        Assert.assertEquals("word is: \"hello\", guesses remaining to still be 7 after guessing \"<\" character",expectedGuessesRemaining, actualguessesRemaining);
+
+    }
 
     @Test
     public void test_makeGuess_properly_updates_the_letters_already_guessed_when_guessing_twice(){

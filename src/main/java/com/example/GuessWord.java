@@ -12,15 +12,9 @@ public class GuessWord {
 
         // call the new method to load external files categories into a map of word:category
         Map<String, String> myWordsAndCategories = loadWordsInMap();
-
-        // put the keys (words) into this list-->
-
-
-        // convert the list into an array, likely a way to directly convert the keys to an array
-      //  String[] myWordsArray = myWordList.toArray(new String[0]);
-
-
+        System.out.println();
         System.out.println("Welcome to the word guessing game! You'll guess one letter at a time.");
+        System.out.println();
         boolean playGame = true;
         while (playGame) {
             playGame = runTheGame(myWordsAndCategories);
@@ -59,23 +53,13 @@ public class GuessWord {
 
 
     private static boolean runTheGame(Map<String, String> wordListAndCategories) {
-        //call the class to get the random word
-//        Random rand = new Random(); // create instance of the Random Class called rand
-
         Scanner scanner = new Scanner(System.in);
-        //String[] wordList = new String[]{"fresh", "couch", "third", "yellow", "football", "proxy", "process", "penalties", "conversion"};
-       // String[] wordList = new String[] {"goodbye", "hello"};
-        // create random index from the word List array
-//        int randomIndex = rand.nextInt(wordList.length);
-//        String myWord = wordList[randomIndex];
 
         List<String> myWordList = new ArrayList<>(wordListAndCategories.keySet());
 
         String[] myWordsArray = myWordList.toArray(new String[0]);
         String myWord = randomlyPickWord(myWordsArray);
         String myCategory = wordListAndCategories.get(myWord);
-
-
 
         //pass the string into the SecretWord constructor to create the objects for the game
         SecretWord secretWordObject = new SecretWord(myWord, myCategory);
@@ -84,7 +68,6 @@ public class GuessWord {
 
         boolean playAgain = false;
         while (secretWordObject.getNumGuessesRemaining() > 0 && numOfLettersLeft > 0) {
-
 
             //todo turn this into a method
             System.out.println("************ Number of Wrong Guesses left: " + numOfGuessesLeft + "  ************");
@@ -97,22 +80,21 @@ public class GuessWord {
 
             System.out.println("Category: " + secretWordObject.getCategory());
 
-            //todo add in part to Try, Except - check against custom LetterValidationException
+            //todo turn into Try, Catch?
             System.out.println("What letter do you guess?");
             String strGuessedLetter = scanner.nextLine();
 
-            // make a guess and return it here -->
-            secretWordObject.makeGuess(strGuessedLetter);
+            // make a guess
+            System.out.println(secretWordObject.makeGuess(strGuessedLetter));
 
-            System.out.println(secretWordObject);
 
             //getting updated number of letters left in the word still to be guessed
             numOfLettersLeft = secretWordObject.getNumLettersRemaining();
             numOfGuessesLeft = secretWordObject.getNumGuessesRemaining();
             if (numOfLettersLeft == 0) {
-                //String finalDisplay = secretWordObject.toString();
                 System.out.println();
                 System.out.println(secretWordObject);
+
                 //todo turn this into a method for printing the banner
                 System.out.println("**********************************");
                 System.out.println("*****   CONGRATS, YOU WON!   *****");
